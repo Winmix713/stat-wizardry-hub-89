@@ -1,4 +1,4 @@
-import { TrendingUp, TrendingDown, Minus, Trophy, Target, BarChart3, AlertTriangle } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Trophy, Target, BarChart3, AlertTriangle, RotateCcw } from "lucide-react";
 import NumberCounter from "./NumberCounter";
 import { MatchStats, OptimizedDisplayCriteria } from "@/lib/supabase";
 import LoadingSpinner from "./LoadingSpinner";
@@ -174,6 +174,23 @@ const OptimizedStatisticsCards = ({ stats, loading }: OptimizedStatisticsCardsPr
     glowColor: "chart-5/40",
     isQualified: true,
     decimal: 1
+  });
+
+  // Always show comeback count
+  qualifyingStatsConfig.push({
+    title: "Fordítások",
+    value: stats.comeback_count,
+    percentage: stats.comeback_percentage,
+    color: "destructive",
+    icon: RotateCcw,
+    gradient: "from-destructive/20 via-destructive/10 to-transparent",
+    ringColor: "destructive",
+    iconBg: "destructive/20",
+    borderColor: "destructive/30",
+    glowColor: "destructive/40",
+    isQualified: true,
+    suffix: " db",
+    decimal: 0
   });
 
   return (

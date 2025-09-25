@@ -1,4 +1,4 @@
-import { TrendingUp, TrendingDown, Minus, Trophy, Target, BarChart3 } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Trophy, Target, BarChart3, RotateCcw } from "lucide-react";
 import NumberCounter from "./NumberCounter";
 import { MatchStats } from "@/lib/supabase";
 import LoadingSpinner from "./LoadingSpinner";
@@ -131,6 +131,20 @@ const StatisticsCards = ({ stats, loading }: StatisticsCardsProps) => {
       borderColor: "chart-5/30",
       glowColor: "chart-5/40",
       decimal: 1
+    },
+    {
+      title: "Fordítások",
+      value: stats.comeback_count,
+      percentage: stats.comeback_percentage,
+      color: "destructive",
+      icon: RotateCcw,
+      gradient: "from-destructive/20 via-destructive/10 to-transparent",
+      ringColor: "destructive",
+      iconBg: "destructive/20",
+      borderColor: "destructive/30",
+      glowColor: "destructive/40",
+      suffix: " db",
+      decimal: 0
     },
   ];
 
