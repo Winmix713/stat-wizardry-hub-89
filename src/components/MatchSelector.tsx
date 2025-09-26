@@ -81,7 +81,7 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
                 )}
               </div>
               
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs text-emerald-400 mb-2 block font-bold uppercase tracking-wider">
                     HAZAI
@@ -105,12 +105,6 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-
-                <div className="flex items-center justify-center py-2">
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                  <span className="mx-3 text-white/40 text-xs font-medium">VS</span>
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                 </div>
 
                 <div>
