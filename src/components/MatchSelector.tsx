@@ -43,42 +43,54 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
   };
 
   return (
-    <div className="space-y-4">
-      <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-white mb-2">Mérkőzések beállítása</h3>
-        <p className="text-sm text-white/70">Válassz ki legfeljebb 8 mérkőzést az elemzéshez</p>
+    <div className="space-y-6">
+      <div className="text-center">
+        <h3 className="text-xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+          <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+          Csapat párosító
+        </h3>
+        <p className="text-sm text-white/60">Válassz ki legfeljebb 8 mérkőzést az elemzéshez</p>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {matches.map((match) => (
-          <Card key={match.id} className="glass-card border-white/10 hover:border-white/20 transition-colors">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-medium text-white/90">
-                  {match.id}. mérkőzés
-                </h4>
+          <Card key={match.id} className="glass-card border-white/10 hover:border-emerald-400/20 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/10">
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
+                    match.home_team && match.away_team 
+                      ? 'bg-emerald-400 text-black' 
+                      : 'bg-white/10 text-white/60'
+                  }`}>
+                    {match.id}
+                  </div>
+                  <h4 className="text-sm font-medium text-white/90">
+                    Mérkőzés
+                  </h4>
+                </div>
                 {(match.home_team || match.away_team) && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => onClearMatch(match.id)}
-                    className="text-white/60 hover:text-white p-1 h-auto hover:bg-white/10"
+                    className="text-white/60 hover:text-white p-1.5 h-auto hover:bg-red-500/20 rounded-full transition-colors"
                   >
                     <Trash2 className="size-3" />
                   </Button>
                 )}
               </div>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div>
-                  <label className="text-xs text-white/60 mb-1.5 block font-medium">
-                    Hazai csapat
+                  <label className="text-xs text-emerald-400 mb-2 block font-bold uppercase tracking-wider">
+                    HAZAI
                   </label>
                   <Select
                     value={match.home_team}
                     onValueChange={(value) => onUpdateMatch(match.id, 'home', value)}
                   >
-                    <SelectTrigger className="bg-background/80 border-white/20 text-white backdrop-blur-sm h-10 text-sm touch-manipulation">
+                    <SelectTrigger className="bg-background/60 border-white/20 text-white backdrop-blur-sm h-12 text-sm touch-manipulation hover:border-emerald-400/30 transition-colors">
                       <SelectValue placeholder="Válassz hazai csapatot" />
                     </SelectTrigger>
                     <SelectContent className="bg-background/95 backdrop-blur-md border-white/20 z-[60] max-h-60">
@@ -86,7 +98,7 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
                         <SelectItem 
                           key={team} 
                           value={team} 
-                          className="text-white hover:bg-white/10 focus:bg-white/10 py-2.5 px-3 text-sm cursor-pointer"
+                          className="text-white hover:bg-emerald-400/20 focus:bg-emerald-400/20 py-3 px-4 text-sm cursor-pointer transition-colors"
                         >
                           {team}
                         </SelectItem>
@@ -95,17 +107,21 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
                   </Select>
                 </div>
 
-                <div className="text-center text-white/40 text-xs">VS</div>
+                <div className="flex items-center justify-center py-2">
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                  <span className="mx-3 text-white/40 text-xs font-medium">VS</span>
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                </div>
 
                 <div>
-                  <label className="text-xs text-white/60 mb-1.5 block font-medium">
-                    Vendég csapat
+                  <label className="text-xs text-orange-400 mb-2 block font-bold uppercase tracking-wider">
+                    VENDÉG
                   </label>
                   <Select
                     value={match.away_team}
                     onValueChange={(value) => onUpdateMatch(match.id, 'away', value)}
                   >
-                    <SelectTrigger className="bg-background/80 border-white/20 text-white backdrop-blur-sm h-10 text-sm touch-manipulation">
+                    <SelectTrigger className="bg-background/60 border-white/20 text-white backdrop-blur-sm h-12 text-sm touch-manipulation hover:border-orange-400/30 transition-colors">
                       <SelectValue placeholder="Válassz vendég csapatot" />
                     </SelectTrigger>
                     <SelectContent className="bg-background/95 backdrop-blur-md border-white/20 z-[60] max-h-60">
@@ -113,7 +129,7 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
                         <SelectItem 
                           key={team} 
                           value={team} 
-                          className="text-white hover:bg-white/10 focus:bg-white/10 py-2.5 px-3 text-sm cursor-pointer"
+                          className="text-white hover:bg-orange-400/20 focus:bg-orange-400/20 py-3 px-4 text-sm cursor-pointer transition-colors"
                         >
                           {team}
                         </SelectItem>

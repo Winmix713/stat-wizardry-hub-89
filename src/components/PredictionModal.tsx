@@ -267,13 +267,22 @@ const PredictionModal = ({ open, onOpenChange }: PredictionModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-full max-w-7xl h-[95vh] sm:max-h-[95vh] p-0 glass-card border-white/20 flex flex-col">
+      <DialogContent className="w-full max-w-7xl h-[95vh] sm:max-h-[95vh] p-0 glass-card border-white/20 flex flex-col backdrop-blur-xl bg-background/80">
         {/* Header - Fixed */}
-        <DialogHeader className="flex-shrink-0 px-4 sm:px-6 py-4 sm:py-6 border-b border-white/10 bg-gradient-to-r from-primary/10 to-secondary/10">
-          <DialogTitle className="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
-            <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
-            Predikció készítése
-          </DialogTitle>
+        <DialogHeader className="flex-shrink-0 px-4 sm:px-6 py-4 sm:py-6 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-emerald-400/5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+              <DialogTitle className="text-xl sm:text-2xl font-bold text-white">
+                Meccsek beállítása
+              </DialogTitle>
+            </div>
+            {validMatchCount > 0 && (
+              <div className="text-sm font-medium text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">
+                {validMatchCount} / 8 meccs beállítva
+              </div>
+            )}
+          </div>
           <p className="text-sm sm:text-base text-white/70 mt-2">
             Készíts optimalizált elemzést a kiválasztott mérkőzésekről
           </p>
