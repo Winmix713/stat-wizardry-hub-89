@@ -217,3 +217,5 @@ export const PredictionResults = memo(({ predictions }: PredictionResultsProps) 
     </div>
   );
 });
+// Csak átmenetileg teszteléshez
+export default PredictionResults;
