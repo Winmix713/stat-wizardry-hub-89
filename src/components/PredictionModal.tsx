@@ -104,6 +104,16 @@ const PredictionModal = ({ open, onOpenChange }: PredictionModalProps) => {
     ));
   };
 
+  const clearAllMatches = () => {
+    const emptyMatches = Array.from({ length: 8 }, (_, index) => ({
+      id: index + 1,
+      home_team: "",
+      away_team: ""
+    }));
+    setSelectedMatches(emptyMatches);
+    setPredictions([]);
+  };
+
   const runPredictions = async () => {
     const validMatches = selectedMatches.filter(match => match.home_team && match.away_team);
     
@@ -297,43 +307,12 @@ const PredictionModal = ({ open, onOpenChange }: PredictionModalProps) => {
             teams={teams}
             onUpdateMatch={updateMatch}
             onClearMatch={clearMatch}
+            onClearAllMatches={clearAllMatches}
+            onRunPredictions={runPredictions}
+            loading={loading}
+            validMatchCount={validMatchCount}
           />
 
-          {/* Run Predictions Section */}
-          <div className="sticky bottom-0 bg-background/80 backdrop-blur-sm p-4 rounded-lg border border-white/10 mx-auto max-w-md">
-            <div className="text-center space-y-3">
-              {validMatchCount > 0 && (
-                <div className="text-sm text-white/80">
-                  <span className="font-medium text-primary">{validMatchCount}</span> mérkőzés kiválasztva
-                </div>
-              )}
-              
-              <Button
-                onClick={runPredictions}
-                disabled={!isValid || loading}
-                className="w-full winmix-btn-primary winmix-hover-lift winmix-focus text-base sm:text-lg py-3 sm:py-4 h-auto touch-manipulation"
-                size="lg"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="size-5 mr-2 animate-spin" />
-                    Elemzés folyamatban...
-                  </>
-                ) : (
-                  <>
-                    <PlayCircle className="size-5 mr-2" />
-                    Futtatás
-                  </>
-                )}
-              </Button>
-              
-              {!isValid && (
-                <p className="text-xs text-white/60">
-                  Válassz ki legalább egy mérkőzést az elemzéshez
-                </p>
-              )}
-            </div>
-          </div>
 
           {/* Predictions Results */}
           <PredictionResults predictions={predictions} />

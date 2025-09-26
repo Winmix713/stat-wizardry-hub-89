@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Trash2 } from "lucide-react";
+import { Trash2, PlayCircle, Loader2, RotateCcw } from "lucide-react";
 
 interface PredictedMatch {
   id: number;
@@ -14,9 +14,13 @@ interface MatchSelectorProps {
   teams: string[];
   onUpdateMatch: (matchId: number, side: 'home' | 'away', team: string) => void;
   onClearMatch: (matchId: number) => void;
+  onClearAllMatches: () => void;
+  onRunPredictions: () => void;
+  loading: boolean;
+  validMatchCount: number;
 }
 
-export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: MatchSelectorProps) => {
+export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch, onClearAllMatches, onRunPredictions, loading, validMatchCount }: MatchSelectorProps) => {
   const getUsedTeams = () => {
     const used = new Set<string>();
     matches.forEach(match => {
@@ -44,12 +48,52 @@ export const MatchSelector = ({ matches, teams, onUpdateMatch, onClearMatch }: M
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h3 className="text-xl font-bold text-white mb-2 flex items-center justify-center gap-2">
-          <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
-          Csapat párosító
-        </h3>
-        <p className="text-sm text-white/60">Válassz ki legfeljebb 8 mérkőzést az elemzéshez</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="text-center sm:text-left">
+          <h3 className="text-lg font-bold text-white mb-1 flex items-center justify-center sm:justify-start gap-2">
+            <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+            Csapat párosító
+          </h3>
+          <p className="text-xs text-white/60">Max. 8 mérkőzés</p>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          {validMatchCount > 0 && (
+            <div className="text-xs font-medium text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">
+              {validMatchCount} / 8
+            </div>
+          )}
+          
+          <Button
+            onClick={onClearAllMatches}
+            variant="ghost"
+            size="sm"
+            className="text-red-400 hover:text-red-300 hover:bg-red-500/20 px-3 py-2 h-auto text-xs"
+            disabled={validMatchCount === 0}
+          >
+            <RotateCcw className="size-3 mr-1.5" />
+            Összes törlése
+          </Button>
+          
+          <Button
+            onClick={onRunPredictions}
+            disabled={validMatchCount === 0 || loading}
+            className="winmix-btn-primary winmix-hover-lift px-4 py-2 h-auto text-sm"
+            size="sm"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="size-4 mr-1.5 animate-spin" />
+                Elemzés...
+              </>
+            ) : (
+              <>
+                <PlayCircle className="size-4 mr-1.5" />
+                Futtatás
+              </>
+            )}
+          </Button>
+        </div>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
