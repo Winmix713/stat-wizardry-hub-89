@@ -8,7 +8,7 @@ import ProbabilitySection from "@/components/ProbabilitySection";
 import EnhancedChartSection from "@/components/EnhancedChartSection";
 import ResultsTable from "@/components/ResultsTable";
 import DashboardCustomizer from "@/components/DashboardCustomizer";
-import PredictionModal from "@/components/PredictionModal";
+import { PredictionModal } from "@/components/PredictionModal";
 import { DashboardContainer, DashboardItem } from "@/components/DashboardContainer";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
