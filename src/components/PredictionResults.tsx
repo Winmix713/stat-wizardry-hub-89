@@ -1,12 +1,5 @@
-
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  CheckCircle, 
-  AlertTriangle, 
-  TrendingUp, 
-  Target, 
-  BarChart3 
-} from "lucide-react";
+import { CheckCircle, AlertTriangle, TrendingUp, Target, BarChart3 } from "lucide-react";
 import type { MatchStats } from "@/lib/supabase";
 
 interface PredictedMatch {
