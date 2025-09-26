@@ -34,14 +34,11 @@ export const PredictionResults = ({ predictions }: PredictionResultsProps) => {
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-2 mb-3">
           <BarChart3 className="w-5 h-5 text-primary" />
-          <h3 className="text-lg sm:text-xl font-semibold text-white">Optimalizált predikciós eredmények</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-white">Predikciós eredmények</h3>
         </div>
         
-        <div className="inline-flex flex-wrap items-center gap-2 text-xs bg-white/5 px-3 py-2 rounded-full border border-white/10">
-          <span className="text-white/80">Kritériumok:</span>
-          <span className="text-success">≥65% győzelem</span>
-          <span className="text-warning">&gt;30% döntetlen</span>
-          <span className="text-primary">≥55% BTTS</span>
+        <div className="text-sm text-white/70 mb-4">
+          Elemzés a kiválasztott csapatok egymás elleni mérkőzései alapján
         </div>
       </div>
       
@@ -78,139 +75,86 @@ export const PredictionResults = ({ predictions }: PredictionResultsProps) => {
               </div>
               
               {stats ? (
-                <div className="space-y-4 sm:space-y-6">
-                  {/* Recommendation */}
-                  {stats.prediction_quality && (
-                    <div className={`p-3 sm:p-4 rounded-lg border ${
-                      stats.prediction_quality.confidence === 'high' 
-                        ? 'bg-success/10 border-success/20' 
-                        : stats.prediction_quality.confidence === 'medium'
-                        ? 'bg-warning/10 border-warning/20'
-                        : 'bg-white/5 border-white/10'
-                    }`}>
-                      <div className="flex items-start gap-3">
-                        <Target className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
-                          stats.prediction_quality.confidence === 'high' 
-                            ? 'text-success' 
-                            : stats.prediction_quality.confidence === 'medium'
-                            ? 'text-warning'
-                            : 'text-white/60'
-                        }`} />
-                        <div className="min-w-0 flex-1">
-                          <div className="text-sm font-medium text-white mb-1">
-                            Ajánlás
-                          </div>
-                          <div className="text-sm text-white/90 break-words">
-                            {stats.prediction_quality.recommendation}
-                          </div>
-                        </div>
+                <div className="space-y-4">
+                  {/* 1x2 Results Section */}
+                  <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                    <h5 className="text-sm font-semibold text-white mb-3">1x2 Eredmények ({stats.total_matches} közös mérkőzésből)</h5>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-white">{stats.home_wins}</div>
+                        <div className="text-xs text-white/70">Hazai győzelem</div>
+                        <div className="text-sm text-emerald-400 font-medium">{stats.home_win_percentage}%</div>
                       </div>
-                    </div>
-                  )}
-
-                  {/* Basic Statistics */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/70">Összes mérkőzés:</span>
-                        <span className="text-sm font-semibold text-white">{stats.total_matches}</span>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-white">{stats.draws}</div>
+                        <div className="text-xs text-white/70">Döntetlen</div>
+                        <div className="text-sm text-yellow-400 font-medium">{stats.draw_percentage}%</div>
                       </div>
-                      
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/70">Átlagos gólok:</span>
-                        <span className="text-sm font-semibold text-white">{stats.avg_goals}</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/70">Hazai átlag:</span>
-                        <span className="text-sm font-semibold text-white">{stats.home_avg_goals}</span>
-                      </div>
-                      
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/70">Vendég átlag:</span>
-                        <span className="text-sm font-semibold text-white">{stats.away_avg_goals}</span>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-white">{stats.away_wins}</div>
+                        <div className="text-xs text-white/70">Vendég győzelem</div>
+                        <div className="text-sm text-blue-400 font-medium">{stats.away_win_percentage}%</div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Qualified Statistics */}
-                  <div className="space-y-2">
-                    {stats.prediction_quality.home_qualified && (
-                      <div className="flex justify-between items-center bg-success/10 p-2 sm:p-3 rounded border border-success/20">
-                        <span className="text-success font-medium text-sm">Hazai győzelem:</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-success font-bold text-sm">{stats.home_win_percentage}%</span>
-                          <CheckCircle className="w-3 h-3 text-success" />
-                        </div>
+                  {/* Goal Averages */}
+                  <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                    <h5 className="text-sm font-semibold text-white mb-3">Gól átlagok (közös mérkőzések)</h5>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-emerald-400">{stats.home_avg_goals}</div>
+                        <div className="text-xs text-white/70">{match.home_team} átlaga</div>
                       </div>
-                    )}
-                    
-                    {stats.prediction_quality.away_qualified && (
-                      <div className="flex justify-between items-center bg-success/10 p-2 sm:p-3 rounded border border-success/20">
-                        <span className="text-success font-medium text-sm">Vendég győzelem:</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-success font-bold text-sm">{stats.away_win_percentage}%</span>
-                          <CheckCircle className="w-3 h-3 text-success" />
-                        </div>
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-blue-400">{stats.away_avg_goals}</div>
+                        <div className="text-xs text-white/70">{match.away_team} átlaga</div>
                       </div>
-                    )}
-                    
-                    {stats.prediction_quality.draw_highlighted && (
-                      <div className="flex justify-between items-center bg-warning/10 p-2 sm:p-3 rounded border border-warning/20">
-                        <span className="text-warning font-medium text-sm">Döntetlen (magas):</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-warning font-bold text-sm">{stats.draw_percentage}%</span>
-                          <AlertTriangle className="w-3 h-3 text-warning" />
-                        </div>
-                      </div>
-                    )}
-                    
-                    {stats.prediction_quality.btts_qualified && (
-                      <div className="flex justify-between items-center bg-primary/10 p-2 sm:p-3 rounded border border-primary/20">
-                        <span className="text-primary font-medium text-sm">Mindkét csapat gólja:</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-primary font-bold text-sm">{stats.btts_percentage}%</span>
-                          <CheckCircle className="w-3 h-3 text-primary" />
-                        </div>
-                      </div>
-                    )}
+                    </div>
+                    <div className="mt-3 text-center">
+                      <div className="text-lg font-bold text-white">{stats.avg_goals}</div>
+                      <div className="text-xs text-white/70">Összes gól átlaga mérkőzésenként</div>
+                    </div>
                   </div>
 
-                  {/* Most Frequent Results */}
+                  {/* BTTS and Comeback Statistics */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-white/5 p-3 rounded border border-white/10 text-center">
+                      <div className="text-lg font-bold text-purple-400">{stats.btts_count}</div>
+                      <div className="text-xs text-white/70 mb-1">BTTS mérkőzés</div>
+                      <div className="text-sm text-purple-400 font-medium">{stats.btts_percentage}%</div>
+                    </div>
+                    <div className="bg-white/5 p-3 rounded border border-white/10 text-center">
+                      <div className="text-lg font-bold text-orange-400">{stats.comeback_count}</div>
+                      <div className="text-xs text-white/70 mb-1">Fordítás</div>
+                      <div className="text-sm text-orange-400 font-medium">{stats.comeback_percentage}%</div>
+                    </div>
+                  </div>
+
+                  {/* Top 3 Most Frequent Results */}
                   {stats.most_frequent_results && stats.most_frequent_results.length > 0 && (
-                    <div className="space-y-2 sm:space-y-3">
-                      <h5 className="text-sm font-medium text-white/90 flex items-center gap-2">
+                    <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                      <h5 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
                         <TrendingUp className="w-4 h-4" />
-                        Leggyakoribb eredmények
+                        Leggyakoribb 3 eredmény
                       </h5>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        {stats.most_frequent_results.slice(0, 6).map((result, idx) => (
-                          <div
-                            key={idx}
-                            className="bg-white/5 p-2 rounded text-center border border-white/10"
-                          >
-                            <div className="text-sm font-semibold text-white">
-                              {result.score}
-                            </div>
-                            <div className="text-xs text-white/70">
-                              {result.percentage}%
-                            </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {stats.most_frequent_results.slice(0, 3).map((result, idx) => (
+                          <div key={idx} className="bg-white/10 p-3 rounded text-center border border-white/20">
+                            <div className="text-lg font-bold text-white mb-1">{result.score}</div>
+                            <div className="text-xs text-white/70">{result.count}x ({result.percentage}%)</div>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {/* Halftime Transformations */}
-                  {stats.halftime_transformations > 0 && (
-                    <div className="bg-white/5 p-3 sm:p-4 rounded border border-white/10">
-                      <div className="text-sm text-white/80">
-                        <span className="font-medium">Félidő átalakulások:</span> {stats.halftime_transformations} mérkőzés
-                      </div>
+                  {/* Additional Stats */}
+                  <div className="bg-white/5 p-3 rounded border border-white/10">
+                    <div className="text-sm text-white/80 text-center">
+                      <span className="font-medium">Félidő/végeredmény eltérés:</span> {stats.halftime_transformations} mérkőzés
                     </div>
-                  )}
+                  </div>
                 </div>
               ) : (
                 <div className="text-center py-6 sm:py-8">
