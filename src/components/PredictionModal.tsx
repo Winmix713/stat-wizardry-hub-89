@@ -360,4 +360,7 @@ const PredictionModal = memo(({ open, onOpenChange }: PredictionModalProps) => {
 // Set display name for debugging
 PredictionModal.displayName = 'PredictionModal';
 
+
+
+// Csak átmenetileg teszteléshez
 export default PredictionModal;
