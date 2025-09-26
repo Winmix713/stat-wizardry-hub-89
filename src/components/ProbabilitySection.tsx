@@ -1,5 +1,3 @@
-
-
 import { CircleDot } from "lucide-react";
 import { useState, useEffect } from "react";
 import { MatchStats } from "@/lib/supabase";
@@ -108,4 +106,4 @@ const ProbabilitySection = ({ stats, loading }: ProbabilitySectionProps) => {
   );
 };
 
-export default ProbabilitySection
+export default ProbabilitySection;
