@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -149,7 +150,7 @@ const createEmptyMatches = (): PredictedMatch[] => {
   }));
 };
 
-const PredictionModal = memo(({ open, onOpenChange }: PredictionModalProps) => {
+export const PredictionModal = memo(({ open, onOpenChange }: PredictionModalProps) => {
   const { toast } = useToast();
   const { fetchTeams } = useMatches();
   
@@ -359,8 +360,3 @@ const PredictionModal = memo(({ open, onOpenChange }: PredictionModalProps) => {
 
 // Set display name for debugging
 PredictionModal.displayName = 'PredictionModal';
-
-
-
-// Csak átmenetileg teszteléshez
-export default PredictionModal;
